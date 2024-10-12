@@ -1,0 +1,11 @@
+
+.metadata {
+    display: grid;
+    grid-auto-flow: row;
+    color: rgb(214, 211, 209);
+    font-size: 0.75rem; 
+  }
+
+  .metadata i {
+    font-style: italic;
+  }

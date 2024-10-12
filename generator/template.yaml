@@ -1,0 +1,82 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: >
+    TheBestiary Stack
+Parameters:
+    STORAGEBUCKET:
+        Type: String
+        Default: '{{resolve:ssm:/BESTIARY/BUCKET/STORAGE:1}}'
+    ENTITY:
+        Type: String
+        Default: '{{resolve:ssm:/BESTIARY/ENTITY:1}}'
+    MAILTO: 
+        Type: String
+        Default: '{{resolve:ssm:/BESTIARY/MAIL_TO:1}}'
+    MAILFROM:
+        Type: String
+        Default: '{{resolve:ssm:/BESTIARY/MAIL_FROM:1}}'
+    IDENTITY:
+        Type: String
+        Default: '{{resolve:ssm:/BESTIARY/IDENTITY:1}}'
+
+# More info about Globals: https://github.com/awslabs/serverless-application-model/blob/master/docs/globals.rst
+Globals:
+    Function:
+        Environment:
+            Variables:
+                STORAGE_BUCKET: !Ref STORAGEBUCKET
+                CONTEXT: 'Lambda'
+                ENTITY: !Ref ENTITY
+                MAIL_TO: !Ref MAILTO
+                MAIL_FROM: !Ref MAILFROM
+
+Resources:
+    ################### S3 ###################
+    StorageBucket:
+      Type: AWS::S3::Bucket
+      Properties:
+          BucketName: !Ref STORAGEBUCKET
+          PublicAccessBlockConfiguration:
+              RestrictPublicBuckets: true
+
+
+    ################### Functions ###################
+    UnicornProxyFn:
+        Type: AWS::Serverless::Function
+        Properties:
+            CodeUri: 'src/'
+            Handler: index.main
+            Runtime: nodejs20.x
+            Timeout: 120
+            Architectures:
+                - arm64
+            Events:
+              UnicornTrigger:
+                    Type: Schedule
+                    Properties:
+                        Schedule: cron(0 11 * * ? *)
+                        Input: '{}'
+            Policies:
+            - S3CrudPolicy:
+                  BucketName: !Ref STORAGEBUCKET
+            - SESCrudPolicy:
+                  IdentityName: !Ref IDENTITY
+            - Statement:
+                - Sid: ModelInvocation
+                  Effect: Allow
+                  Action:
+                      [
+                        "bedrock:InvokeModel",
+                        "bedrock:InvokeModelWithResponseStream",
+                      ]
+                  Resource: '*'
+
+        Metadata: # Manage esbuild properties
+            BuildMethod: esbuild
+            BuildProperties:
+                Minify: true
+                Target: es2020
+                Sourcemap: true
+            EntryPoints:
+              - index.ts
+

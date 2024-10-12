@@ -1,0 +1,10 @@
+version = 0.1
+[default.deploy.parameters]
+stack_name = "unicorns-city"
+resolve_s3 = true
+s3_prefix = "unicorns-city"
+region = "us-east-1"
+profile = "personal"
+capabilities = "CAPABILITY_IAM"
+parameter_overrides = "HOSTBUCKET=\"{{resolve:ssm:/UNICORN/BUCKET/HOST:1}}\" ASSETBUCKET=\"{{resolve:ssm:/UNICORN/BUCKET/STORAGE:1}}\" CERTARN=\"{{resolve:ssm:/UNICORN/CERT/ARN:1}}\""
+image_repositories = []

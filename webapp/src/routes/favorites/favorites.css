@@ -1,0 +1,21 @@
+
+/* favorites.css */
+
+.favorites-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 32px;
+    margin: 10vh 5vw;
+  }
+  
+  @media (min-width: 768px) {
+    .favorites-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+  
+  .favorites-image {
+    height: auto;
+    max-width: 100%;
+    border-radius: 0.5rem;
+  }

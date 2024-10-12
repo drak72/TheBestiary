@@ -1,0 +1,46 @@
+/* Image.css */
+.entity-image {
+    place-self: center;
+}
+
+    @media (min-width: 1024px) {
+        .entity-image {
+            place-self: start;
+        }
+    }
+
+    @media (min-width: 1280px) {
+        .entity-image {
+            place-self: start;
+        }
+    }
+
+
+  /** Image Width & Height Queries */ 
+    @media (min-width: 1280px) {
+        .entity-image {
+            width: 768px;
+            height: 768px;
+        }
+    }
+
+    @media (min-width:640px) and (max-width: 1279px) {
+        .entity-image {
+            width: 640px;
+            height: 640px;
+        }
+    }
+
+    @media (min-width: 480px) and (max-width: 639px) {
+        .entity-image {
+            width: 384px;
+            height: 384px;
+        }
+    }
+
+    @media (max-width: 479px) {
+        .entity-image {
+            width: 300px;
+            height:300px;
+        }
+    }

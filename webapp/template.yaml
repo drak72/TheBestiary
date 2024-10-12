@@ -1,0 +1,153 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: >
+    Webapp Front End Infra
+    React TS app, served via S3 backed Cloudfront Distribution.
+
+Parameters:
+    CFDNS:
+        Type: String
+        Default: '{{resolve:ssm:/BESTIARY/CF/DNS:1}}'
+        Description: FQDN for Cloudfront Alias
+    HOSTBUCKET:
+        Type: String
+        Default: '{{resolve:ssm:/BESTIARY/BUCKET/HOST:1}}'
+        Description: FQDN for Site Hosting bucket
+    ASSETBUCKET:
+        Type: String
+        Default: '{{resolve:ssm:/BESTIARY/BUCKET/STORAGE:1}}'
+        Description: FQDN for Asset bucket
+    CERTARN:
+        Type: String
+        Default: '{{resolve:ssm:/BESTIARY/CERT/ARN:1}}'
+        Description: ARN of the Certificate covering the cloudfront alias
+
+Resources:
+    HostBucket:
+        Type: AWS::S3::Bucket
+        Properties:
+            BucketName: !Ref HOSTBUCKET
+            PublicAccessBlockConfiguration:
+              RestrictPublicBuckets: true
+
+    HostBucketPolicy:
+        Type: AWS::S3::BucketPolicy
+        Properties:
+            Bucket: !Ref HostBucket
+            PolicyDocument:
+                Statement:
+                    - Effect: Allow
+                      Action:
+                          - s3:GetObject
+                          - s3:GetObjectVersion
+                      Resource: !Sub arn:aws:s3:::${HostBucket}/*
+                      Principal:
+                          Service: cloudfront.amazonaws.com
+                      Condition:
+                          StringEquals:
+                              AWS:SourceArn: !Sub arn:aws:cloudfront::${AWS::AccountId}:distribution/${CFDistro}
+    AssetBucketPolicy:
+        Type: AWS::S3::BucketPolicy
+        Properties:
+            Bucket: !Ref ASSETBUCKET
+            PolicyDocument:
+                Statement:
+                    - Effect: Allow
+                      Action:
+                          - s3:GetObject
+                          - s3:GetObjectVersion
+                      Resource: !Sub arn:aws:s3:::${ASSETBUCKET}/*
+                      Principal:
+                          Service: cloudfront.amazonaws.com
+                      Condition:
+                          StringEquals:
+                              AWS:SourceArn: !Sub arn:aws:cloudfront::${AWS::AccountId}:distribution/${CFDistro}
+
+    # Origin Access Control
+    # Allows for the bucket to remain private, and gives CF distro
+    # proxy authority to read from it.
+    # Cache Settings must not include headers in order for S3 & CF
+    # To both calculate the same request signature.
+    OriginAccessControl:
+        Type: AWS::CloudFront::OriginAccessControl
+        Properties:
+            OriginAccessControlConfig:
+                Name: !Sub AWS::StackName
+                OriginAccessControlOriginType: s3
+                SigningBehavior: always
+                SigningProtocol: sigv4
+
+    CFDistro:
+        Type: AWS::CloudFront::Distribution
+        Properties:
+            DistributionConfig:
+                # Origin Configuration
+                Origins:
+                    # Webhost
+                    - DomainName: !Sub ${HOSTBUCKET}.s3.${AWS::Region}.amazonaws.com
+                      Id: StaticWebHost
+                      S3OriginConfig:
+                          OriginAccessIdentity: ''
+                      OriginAccessControlId: !GetAtt OriginAccessControl.Id
+                    # Asset Bucket
+                    - DomainName: !Sub ${ASSETBUCKET}.s3.${AWS::Region}.amazonaws.com
+                      Id: AssetBucket
+                      S3OriginConfig:
+                        OriginAccessIdentity: ''
+                      OriginAccessControlId: !GetAtt OriginAccessControl.Id
+                Enabled: true
+                Aliases:
+                    - !Ref CFDNS
+                HttpVersion: http2
+                # Caching Configuration
+                DefaultCacheBehavior:
+                    Compress: true
+                    TargetOriginId: StaticWebHost
+                    CachePolicyId: 658327ea-f89d-4fab-a63d-7e88639e58f6
+                    ViewerProtocolPolicy: redirect-to-https
+                    OriginRequestPolicyId: 59781a5b-3903-41f3-afcb-af62929ccde1 # Managed CORS Custom Origin Request Policy
+                    ResponseHeadersPolicyId: 5cc3b908-e619-4b99-88e5-2cf7f45965bd # Managed CORS with Preflight Response Headers Policy
+
+                CacheBehaviors:
+                # Cache Behavior for Asset Bucket JSON files
+                    - AllowedMethods:
+                          - GET
+                          - HEAD
+                          - OPTIONS
+                      TargetOriginId: AssetBucket
+                      CachePolicyId: 658327ea-f89d-4fab-a63d-7e88639e58f6 # Managed Caching Optimized Policy
+                      PathPattern: /*.json
+                      ViewerProtocolPolicy: redirect-to-https
+                      OriginRequestPolicyId: 59781a5b-3903-41f3-afcb-af62929ccde1 # Managed CORS Custom Origin Request Policy
+                      ResponseHeadersPolicyId: 5cc3b908-e619-4b99-88e5-2cf7f45965bd # Managed CORS with Preflight Response Headers Policy
+
+                # Cache Behavior for Asset Bucket PNG files
+                    - AllowedMethods:
+                          - GET
+                          - HEAD
+                          - OPTIONS
+                      TargetOriginId: AssetBucket
+                      CachePolicyId: 658327ea-f89d-4fab-a63d-7e88639e58f6 # Managed Caching Optimized Policy
+                      PathPattern: /*.png
+                      ViewerProtocolPolicy: redirect-to-https
+                      OriginRequestPolicyId: 88a5eaf4-2fd4-4709-b370-b4c650ea3fcf # Managed CORS S3 Origin Request Policy
+                      ResponseHeadersPolicyId: 5cc3b908-e619-4b99-88e5-2cf7f45965bd # Managed CORS with Preflight Response Headers Policy
+
+  
+                CustomErrorResponses:
+                    - ErrorCode: 404
+                      ResponsePagePath: /index.html
+                      ResponseCode: 404
+                    - ErrorCode: 403
+                      ResponsePagePath: /index.html
+                      ResponseCode: 200
+                ViewerCertificate:
+                    AcmCertificateArn: !Ref CERTARN
+                    SslSupportMethod: sni-only
+                    MinimumProtocolVersion: TLSv1.2_2019
+                PriceClass: PriceClass_200
+
+Outputs:
+    CloudfrontDistro:
+        Description: Endpoint for Cloudfront Distro
+        Value: !GetAtt CFDistro.DomainName

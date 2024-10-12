@@ -1,0 +1,38 @@
+.arrow-btn {
+    place-self: center;
+    position: relative;
+    margin-top: 45vh;
+    margin-bottom: 45vh;
+  }
+
+
+  @media (min-width: 1024px) {
+    .arrow-btn {
+      font-size: 100px;
+    }
+  }
+  
+  @media (max-width: 1024px) and (min-width: 768px) {
+    .arrow-btn {
+      font-size: 100px;
+    }
+  }
+  
+  @media (max-width: 768px) and (min-width: 640px) {
+    .arrow-btn {
+      font-size: 80px;
+    }
+  }
+  
+  @media (max-width: 640px) and (min-width: 480px) {
+    .arrow-btn {
+      font-size: 60px;
+    }
+  }
+  
+  @media (max-width: 480px) and (min-width: 0px) {
+    .arrow-btn {
+      font-size: 40px;
+    }
+  }
+

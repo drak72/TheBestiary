@@ -1,0 +1,10 @@
+version = 0.1
+[default.deploy.parameters]
+stack_name = "unicorn-io"
+resolve_s3 = true
+s3_prefix = "unicorn-io"
+region = "us-east-1"
+profile = "personal"
+capabilities = "CAPABILITY_IAM"
+parameter_overrides = "TOPICNAME=\"{{resolve:ssm:/UNICORN/SNS:1}}\" STORAGEBUCKET=\"{{resolve:ssm:/UNICORN/STORAGE:1}}\" ENTITY=\"{{resolve:ssm:/UNICORN/ENTITY:1}}\" MAILTO=\"{{resolve:ssm:/UNICORN/MAIL_TO:1}}\" MAILFROM=\"{{resolve:ssm:/UNICORN/MAIL_FROM:1}}\""
+image_repositories = []
