@@ -42,7 +42,7 @@ function RouteComponent() {
     (event: RowClickedEvent<RowData>) => {
       const id = event?.node?.data?.id;
       if (id) {
-        navigate({ to: "/entity/$id", params: { id } });
+        navigate({ to: "/entity/$id", params: { id: id.toString() } });
       }
     },
     [navigate],

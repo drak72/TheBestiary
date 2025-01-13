@@ -1,6 +1,4 @@
-import { SVGProps } from "react";
-
-export function HeartOutline(props: SVGProps<SVGSVGElement>) {
+export function HeartOutline(props:{ className?: string, key?: string  }) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"

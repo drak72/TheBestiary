@@ -1,5 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import CilCaretLeft from "../icons/CilCaretLeft";
+
 import "@components/buttons/css/NavigationButtons.css";
 
 interface ArrowProps {

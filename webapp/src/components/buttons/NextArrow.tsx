@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import CilCaretRight from "../icons/CilCaretRight";
+import CilCaretRight from "@components/icons/CilCaretRight";
 
 interface NextProps {
   nextIdx: number | undefined;
@@ -8,9 +8,9 @@ interface NextProps {
 export const NextArrow = ({ nextIdx, max }: NextProps) => (
   <>
     {typeof nextIdx === "number" && nextIdx < max ? (
-      <Link href={`/entity/${nextIdx}`} preload="viewport">
-        <CilCaretRight className="arrow-btn" />
-      </Link>
+        <Link href={`/entity/${nextIdx}`} preload="viewport">
+          <CilCaretRight className="arrow-btn"/>
+        </Link>
     ) : (
       <span className="arrow-btn">_</span>
     )}

@@ -1,6 +1,7 @@
 import { HeartOutline } from "@icons/HeartOutline";
 import { HeartSolid } from "@icons/HeartSolid";
 import { useLocalStorage } from "@hooks/useLocalStorage";
+
 import "@components/buttons/css/CardButtons.css";
 
 interface FavoriteButton {
