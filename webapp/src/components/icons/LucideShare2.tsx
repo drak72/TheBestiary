@@ -1,6 +1,4 @@
-import { SVGProps } from "react";
-
-export function LucideShare2(props: SVGProps<SVGSVGElement>) {
+export function LucideShare2(props:{ className?: string, key?: string  }) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
