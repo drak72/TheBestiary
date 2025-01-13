@@ -10,7 +10,7 @@ interface ArrowProps {
 export const PreviousArrow = ({ prevIdx }: ArrowProps) => (
   <>
     {typeof prevIdx === "number" && prevIdx >= 0 ? (
-      <Link href={`/entity/${prevIdx}`} preload="viewport">
+      <Link to={'/entity/$id'} params={{ id: prevIdx.toString() }} preload="viewport">
         <CilCaretLeft className="arrow-btn" />
       </Link>
     ) : (

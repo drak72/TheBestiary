@@ -38,7 +38,7 @@ export const Appbar = () => {
               ['About', '/about']
             ].map(([text, href]) => (
               <li key={text}>
-                <Link href={href} className="nav-item">
+                <Link to={href} className="nav-item">
                   {text}
                 </Link>
               </li>
