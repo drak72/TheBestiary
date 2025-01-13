@@ -8,7 +8,7 @@ interface NextProps {
 export const NextArrow = ({ nextIdx, max }: NextProps) => (
   <>
     {typeof nextIdx === "number" && nextIdx < max ? (
-        <Link href={`/entity/${nextIdx}`} preload="viewport">
+        <Link to="/entity/$id" params={{ id: nextIdx.toString() }} preload="viewport">
           <CilCaretRight className="arrow-btn"/>
         </Link>
     ) : (

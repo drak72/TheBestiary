@@ -3,6 +3,7 @@ import { EntityCard } from "@components/EntityCard/EntityCard";
 import { PreviousArrow } from "@components/buttons/PreviousArrow";
 import { NextArrow } from "@components/buttons/NextArrow";
 import { cfurl } from "@utils/cfurl";
+
 import "@routes/entity/entity.css";
 
 export const Route = createFileRoute("/entity/$id")({
@@ -27,13 +28,13 @@ function RouteComponent() {
     data && (
       <div className="wrapper">
         <PreviousArrow prevIdx={+id - 1} />
-        <EntityCard
-          img={data?.img}
-          desc={data?.desc}
-          item={data.item}
-          maxIdx={data.len}
-          entityId={id}
-        />
+          <EntityCard
+            img={data?.img}
+            desc={data?.desc}
+            item={data.item}
+            maxIdx={data.len}
+            entityId={id}
+          />
         <NextArrow nextIdx={+id + 1} max={data.len} />
       </div>
     )

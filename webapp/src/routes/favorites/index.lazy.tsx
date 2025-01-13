@@ -1,6 +1,7 @@
 import { useLocalStorage } from "@hooks/useLocalStorage";
 import { cfurl } from "@utils/cfurl";
 import { createLazyFileRoute, Link } from "@tanstack/react-router";
+
 import "@routes/favorites/favorites.css";
 
 export const Route = createLazyFileRoute("/favorites/")({
@@ -19,7 +20,7 @@ function RouteComponent() {
       {items &&
         favorites.map((id) => (
           <div key={`url-${id}`}>
-            <Link href={`/entity/${+id}`}>
+            <Link to="/entity/$id" params={{ id }} preload="viewport" >
               <img
                 className="favorites-image"
                 src={cfurl({ item: items[+id], type: "img.png" })}
