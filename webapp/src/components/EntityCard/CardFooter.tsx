@@ -1,6 +1,7 @@
-import '@components/EntityCard/css/CardFooter.css';
-import { MODEL_MAP } from '@src/consts.ts';
+import { MODEL_MAP } from '@src/consts';
 import { ModelID } from '@src/types';
+
+import '@components/EntityCard/css/CardFooter.css';
 
 interface CardFooterProps {
     item: string;

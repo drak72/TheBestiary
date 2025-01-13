@@ -1,8 +1,12 @@
 import { cfurl } from "@utils/cfurl";
 import { useEffect, useState } from "react";
 
-export const useManifest = () => {
+/** Fetches a cached manifest containing all of the S3 Keypaths for images & fact cards
+ * @returns {string[]} - Array of strings containing the S3 Keypaths
+ */
+export const useManifest = (): string[] => {
   const [manifest, setManifest] = useState<string[]>([]);
+
   useEffect(() => {
     const fetchManifest = async () => {
       const res = await fetch(
@@ -13,7 +17,7 @@ export const useManifest = () => {
     };
 
     fetchManifest();
-  }, []);
+  }, []); // Run once on component mount. 
 
   return manifest;
 };

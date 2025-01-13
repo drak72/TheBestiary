@@ -1,6 +1,5 @@
-import { SVGProps } from "react";
 
-export function HeartSolid(props: SVGProps<SVGSVGElement>) {
+export function HeartSolid(props:{ className?: string, key?: string  }) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"

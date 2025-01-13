@@ -3,7 +3,7 @@ import { useEffect, useRef } from "react";
 /** Adapted from https://www.robinwieruch.de/react-hook-detect-click-outside-component/ */
 export const useClickAway = (
   callback: () => void,
-): React.RefObject<HTMLDivElement> => {
+): React.RefObject<HTMLDivElement | null> => {
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {

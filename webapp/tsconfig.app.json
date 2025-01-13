@@ -14,7 +14,7 @@
       "@routes/*": ["./routes/*"],
       "@hooks/*": ["./hooks/*"],
       "@utils/*": ["./utils/*"],
-      "@src/*": ["./"],
+      "@src/*": ["./*"],
     },
     
     /* Bundler mode */

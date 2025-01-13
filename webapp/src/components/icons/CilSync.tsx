@@ -1,4 +1,4 @@
-export function CilSync(props: any, key: string) {
+export function CilSync(props:{ className?: string, key?: string  }) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -6,7 +6,6 @@ export function CilSync(props: any, key: string) {
       height="1em"
       viewBox="0 0 512 512"
       {...props}
-      key={key}
     >
       <path
         fill="#888888"
