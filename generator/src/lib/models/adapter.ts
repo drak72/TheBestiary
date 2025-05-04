@@ -50,10 +50,10 @@ export const parseResponse = <T extends Record<string, any>>({ selector, respons
 }
 
 export enum ImageModels {
-  StableDiffusion = 'stability.stable-diffusion-xl-v1',
-  StableImageUltra1 = 'stability.stable-image-ultra-v1:0',
-  StableImageCore1 = 'stability.stable-image-core-v1:0',
-  StableDiffusion3L = 'stability.sd3-large-v1:0',
+  // StableDiffusion = 'stability.stable-diffusion-xl-v1', Legacy
+  StableImageUltra1 = 'stability.stable-image-ultra-v1:1',
+  StableImageCore1 = 'stability.stable-image-core-v1:1',
+  StableDiffusion3L = 'stability.sd3-5-large-v1:0',
   TitanImgV2 = 'amazon.titan-image-generator-v2:0',
 }
 
@@ -63,7 +63,7 @@ export enum TextModels {
 }
 
 export const models = {
-      [ImageModels.StableDiffusion]: stableDiffusionV1,
+      // [ImageModels.StableDiffusion]: stableDiffusionV1,
       [ImageModels.TitanImgV2]: titanImgV2,
       [ImageModels.StableImageCore1]: stableDiffusionV2,
       [ImageModels.StableImageUltra1]: stableDiffusionV2,
@@ -73,7 +73,7 @@ export const models = {
   }
 
   export const modelMap = {
-    [ImageModels.StableDiffusion]: 1,
+    // [ImageModels.StableDiffusion]: 1,
     [ImageModels.TitanImgV2]: 2,
     [TextModels.Claude3Haiku]: 3,
     [TextModels.Claude3Sonnet]: 4,
