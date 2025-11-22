@@ -2,6 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { EntityCard } from "@components/EntityCard/EntityCard";
 import { PreviousArrow } from "@components/buttons/PreviousArrow";
 import { NextArrow } from "@components/buttons/NextArrow";
+import { useEntityNavigation } from "@hooks/useEntityNavigation";
 import { cfurl } from "@utils/cfurl";
 
 import "@routes/entity/entity.css";
@@ -44,11 +45,16 @@ export const Route = createFileRoute("/entity/$id")({
 function RouteComponent() {
   const data = Route.useLoaderData();
   const { id } = Route.useParams();
+  const currentId = +id;
+  const { swipeRef, prevIdx, nextIdx } = useEntityNavigation({
+    currentId,
+    maxIdx: data?.len ?? 0,
+  });
 
   return (
     data && (
-      <div className="wrapper">
-        <PreviousArrow prevIdx={+id - 1} />
+      <div className="wrapper" ref={swipeRef}>
+        <PreviousArrow prevIdx={prevIdx} />
           <EntityCard
             img={data?.img}
             desc={data?.desc}
@@ -56,7 +62,7 @@ function RouteComponent() {
             maxIdx={data.len}
             entityId={id}
           />
-        <NextArrow nextIdx={+id + 1} max={data.len} />
+        <NextArrow nextIdx={nextIdx} max={data.len} />
       </div>
     )
   );

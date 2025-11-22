@@ -2,6 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { EntityCard } from "@components/EntityCard/EntityCard";
 import { PreviousArrow } from "@components/buttons/PreviousArrow";
 import { NextArrow } from "@components/buttons/NextArrow";
+import { useEntityNavigation } from "@hooks/useEntityNavigation";
 import { cfurl } from "@utils/cfurl";
 
 export const Route = createFileRoute("/")({
@@ -20,22 +21,28 @@ export const Route = createFileRoute("/")({
 
 function RouteComponent() {
   const data = Route.useLoaderData();
+  const currentId = data?.len ?? 0;
+  const { swipeRef, prevIdx, nextIdx } = useEntityNavigation({
+    currentId,
+    maxIdx: data?.len ?? 0,
+  });
 
   return (
     data && (
       <div
+        ref={swipeRef}
         style={{ marginTop: "10vh", marginBottom: "10vh" }}
         className="flex flex-row"
       >
-        <PreviousArrow prevIdx={data.len - 1} />
+        <PreviousArrow prevIdx={prevIdx} />
         <EntityCard
           img={data?.img}
           desc={data?.desc}
           item={data.item}
           maxIdx={data.len}
-          entityId={data.len.toString()}
+          entityId={currentId.toString()}
         />
-        <NextArrow nextIdx={data.len + 1} max={data.len} />
+        <NextArrow nextIdx={nextIdx} max={data.len} />
       </div>
     )
   );
