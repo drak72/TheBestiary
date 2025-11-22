@@ -2,7 +2,7 @@ import { config } from 'dotenv';
 import shuffle from 'lodash/shuffle';
 import { pipeline, prompt, mail, validate, s3, model } from './utils/index'
 
-import { ImageModels, models, TextModels } from "./lib/models/adapter";
+import { ImageModels, models, selectableImageModels, TextModels } from "./lib/models/adapter";
 config();
 
 const { STORAGE_BUCKET, ENTITY, MAIL_FROM, MAIL_TO } = validate.environment([
@@ -48,7 +48,7 @@ export const main = async () => {
   const date = new Date();
 
   /** Pick the models to be utilized */
-  const [imageModel] = shuffle(Object.values(ImageModels));
+  const [imageModel] = shuffle(Object.values(selectableImageModels));
   const [textModel] = shuffle(Object.values(TextModels));
 
   const imgAdapter = models[imageModel as ImageModels];
