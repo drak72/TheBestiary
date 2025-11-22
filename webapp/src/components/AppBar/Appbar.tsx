@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Link } from "@tanstack/react-router";
 import { useClickAway } from "@hooks/useClickAway";
-import { Hamburger } from "@components/Icons/Hamburger";
+import { Hamburger } from "@components/icons/Hamburger";
 
 import "@components/AppBar/Appbar.css";
 

@@ -2,7 +2,7 @@ import { SetStateAction, useEffect, useState } from "react";
 
 interface LocalStorage {
   key: string;
-  default: object | [];
+  default?: object | [];
 }
 
 /**
@@ -13,9 +13,9 @@ interface LocalStorage {
  * @param key
  * @returns
  */
-export const useLocalStorage = <T,>({ key }: LocalStorage) => {
+export const useLocalStorage = <T,>({ key, default: defaultValue = [] }: LocalStorage) => {
   const hydrated = localStorage.getItem(key);
-  const [data, setData] = useState<T>((hydrated && JSON.parse(hydrated)) || []);
+  const [data, setData] = useState<T>((hydrated && JSON.parse(hydrated)) || defaultValue as T);
 
   useEffect(() => {
     localStorage.setItem(key, JSON.stringify(data));

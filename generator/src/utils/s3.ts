@@ -82,7 +82,7 @@ export const get = ({ Bucket }: BaseParams) =>  async ({ Key }: GetObjectCommand
 };
 
 export const list = ({ Bucket }: BaseParams) => async () => {
-  const keys = [];
+  const keys: (string | undefined)[] = [];
 
   const paginator = paginateListObjectsV2(
     { client },
@@ -90,17 +90,20 @@ export const list = ({ Bucket }: BaseParams) => async () => {
   );
 
   for await (const page of paginator){
-    keys.push(page?.Contents?.map((o) => o.Key))
+    if (page?.Contents) {
+      const pageKeys = page.Contents.map((o) => o.Key);
+      keys.push(...pageKeys);
+    }
   }
 
-  return keys;
+  return keys.filter((key): key is string => key !== undefined);
 }
 
 export const manifest = ({ Bucket }: BaseParams) => async (acc: Generator) => { 
-    const [items] = await list({ Bucket })();
+    const items = await list({ Bucket })();
     const imgs = items
-      ?.filter((i) => i?.includes('/img.png'))
-      ?.map((i) => { 
+      .filter((i) => i?.includes('/img.png'))
+      .map((i) => { 
         return i?.replace('/img.png', '');
     });
 
