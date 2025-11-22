@@ -12,11 +12,32 @@ export const Route = createFileRoute("/entity/$id")({
     if (items.length < 1) return;
 
     const item = (items as string[])[+id];
-    const descriptionFile = await fetch(cfurl({ item, type: "desc.json" }));
-    const desc = await descriptionFile.json();
-
     const img = cfurl({ item, type: "img.png" });
-    return { img, desc, len: items.length, item };
+    
+    const descDefault = {
+      name: "",
+      scientific_name: "",
+      diet: "",
+      habitat: "",
+      size: "",
+      coloration: "",
+      lifespan: "",
+      fun_fact: "",
+      special_abilities: "",
+      model: "",
+      date: "",
+      prompt: "",
+    };
+
+   
+    const descriptionFile = await fetch(cfurl({ item, type: "desc.json" }));
+
+    try { 
+      const desc = await descriptionFile.json();
+      return { img, desc, len: items.length, item };
+    } catch (error) {
+      return { img, desc: descDefault, len: items.length, item };
+    }
   },
 });
 

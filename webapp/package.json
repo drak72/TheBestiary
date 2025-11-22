@@ -10,7 +10,9 @@
     "preview": "vite preview",
     "test": "jest",
     "deploy:default": "sam build && sam deploy --profile personal",
-    "sync:default": "yarn build && aws s3 sync  ./dist/ s3://unicorn.host --profile personal"
+    "sync:default": "yarn build && aws s3 sync  ./dist/ s3://unicorn.host --profile personal",
+    "invalidate": "aws cloudfront create-invalidation --distribution-id E40A16T4MLNJE --paths '/*' --profile personal",
+    "deploy": "npm run build && aws s3 sync ./dist/ s3://unicorn.host --profile personal && npm run invalidate"
   },
   "dependencies": {
     "@tanstack/react-router": "^1.88.0",

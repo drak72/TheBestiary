@@ -191,7 +191,7 @@ describe('S3 Functions', () => {
 
       const result = await s3Instance.list();
 
-      expect(result).toEqual([['file1.txt', 'file2.txt']]);
+      expect(result).toEqual(['file1.txt', 'file2.txt']);
     });
 
     it('should handle empty bucket', async () => {
@@ -201,7 +201,27 @@ describe('S3 Functions', () => {
 
       const result = await s3Instance.list();
 
-      expect(result).toEqual([[]]);
+      expect(result).toEqual([]);
+    });
+
+    it('should handle pagination across multiple pages', async () => {
+      const mockContentsPage1 = Array.from({ length: 1000 }, (_, i) => ({ Key: `file${i}.txt` }));
+      const mockContentsPage2 = [
+        { Key: 'file1000.txt' },
+        { Key: 'file1001.txt' }
+      ];
+      (paginateListObjectsV2 as Mock).mockImplementation(function* () {
+        yield { Contents: mockContentsPage1 };
+        yield { Contents: mockContentsPage2 };
+      });
+
+      const result = await s3Instance.list();
+
+      expect(result).toHaveLength(1002);
+      expect(result[0]).toBe('file0.txt');
+      expect(result[999]).toBe('file999.txt');
+      expect(result[1000]).toBe('file1000.txt');
+      expect(result[1001]).toBe('file1001.txt');
     });
   });
 

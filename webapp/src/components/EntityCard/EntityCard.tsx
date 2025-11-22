@@ -41,7 +41,7 @@ export const EntityCard = ({
 
   return (
     <div className={`entity-card`}>
-      <img className="entity-image" src={img} alt={`${name}`} />
+      <img className="entity-image" src={img} alt={name || "Entity image"} />
 
       <div className="card-content">
         <h5>{name}</h5>

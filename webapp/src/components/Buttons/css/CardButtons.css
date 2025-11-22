@@ -1,0 +1,93 @@
+ /* Dropdown Button */
+ .dropbtn {
+    color: white;
+    padding: 16px;
+    font-size: 16px;
+    border: none;
+  }
+  
+  /* The container needed to position the dropdown content */
+  .dropdown {
+    position: relative;
+    display: inline-block;
+  }
+  
+  /* Dropdown Content (Hidden by Default) */
+  .dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f1f1f1;
+    min-width: 40px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+  }
+  
+  /* Links inside the dropdown */
+  .dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+  }
+  
+  .dropdown-content button {
+    color: grey;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    font-size: 16px;
+  }
+
+  
+  /* Show the dropdown menu on hover */
+  .dropdown:hover .dropdown-content {display: block;}
+  
+  .snackbar {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #333;
+    color: white;
+    padding: 12px 24px;
+    border-radius: 4px;
+    z-index: 1000;
+} 
+
+  /** Card Buttons */
+  .card-btn {
+    place-self: center;
+    padding-right: 0.75rem;
+    padding-left: 0.75rem;
+  }
+/** Media Queries for scaling Card Buttons */
+  @media (min-width: 1024px) {
+    .card-btn {
+      font-size: 20px;
+      padding-right: 0.5rem;
+      padding-left: 0.5rem;
+    }
+  };
+
+   @media (max-width: 1024px) and (min-width: 768px) {
+    .card-btn {
+      font-size: 20px;
+    }
+  };
+
+  @media  (max-width: 768px) and (min-width: 640px) {
+    .card-btn {
+      font-size: 18px;
+    }
+  }
+
+  @media (max-width: 640px) and (min-width: 480px) {
+    .card-btn {
+      font-size: 16px;
+    }
+  }
+  @media (max-width: 480px) and (min-width: 0px) {
+    .card-btn {
+      font-size: 12px;
+    }
+  }
