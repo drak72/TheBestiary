@@ -1,6 +1,6 @@
 import { config } from 'dotenv';
 import shuffle from 'lodash/shuffle';
-import { pipeline, prompt, mail, validate, s3, model } from './utils/index'
+import { pipeline, prompt, mail, validate, s3, model, compress } from './utils/index'
 
 import { ImageModels, models, selectableImageModels, TextModels } from "./lib/models/adapter";
 config();
@@ -65,6 +65,7 @@ export const main = async () => {
     }),
     model.invoke.image(imgAdapter),
     storageBucket.upload.image,
+    compress,
     prompt.text,
     model.invoke.text(txtAdapter),
     storageBucket.upload.text,
