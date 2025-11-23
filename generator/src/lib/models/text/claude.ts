@@ -28,7 +28,12 @@ export const claude = {
   },
   parse: (response: ResponseShape) => {
     return parseResponse({
-      selector: (parsed) => JSON.parse(parsed.content[0].text),
+      selector: (parsed) => {
+        let text = parsed.content[0].text;
+        // Remove markdown code blocks if present
+        text = text.replace(/^```json\s*/i, '').replace(/^```\s*/i, '').replace(/\s*```$/i, '').trim();
+        return JSON.parse(text);
+      },
       response
     })
   }

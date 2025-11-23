@@ -28,7 +28,7 @@ const mockGenerator = {
     }
   },
   textModel: {
-    id: TextModels.Claude3Haiku,
+    id: TextModels.Claude45Haiku,
     input: {
         prompt: ''
     },

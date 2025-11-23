@@ -64,8 +64,9 @@ export const selectableImageModels = [
 ]
 
 export enum TextModels {
-  Claude3Haiku = 'anthropic.claude-3-haiku-20240307-v1:0',
-  Claude3Sonnet = 'anthropic.claude-3-sonnet-20240229-v1:0',
+  Claude45Haiku = 'anthropic.claude-haiku-4-5-20251001-v1:0',
+  Claude45Sonnet = 'anthropic.claude-sonnet-4-5-20250929-v1:0',
+  Claude41Opus = 'anthropic.claude-opus-4-1-20250805-v1:0',
 }
 
 export const models = {
@@ -74,16 +75,18 @@ export const models = {
       [ImageModels.StableImageCore1]: stableDiffusionV2,
       [ImageModels.StableImageUltra1]: stableDiffusionV2,
       [ImageModels.StableDiffusion3L]: stableDiffusionV2,
-      [TextModels.Claude3Haiku]: claude,
-      [TextModels.Claude3Sonnet]: claude,
+      [TextModels.Claude45Haiku]: claude,
+      [TextModels.Claude45Sonnet]: claude,
+      [TextModels.Claude41Opus]: claude,
   }
 
   export const modelMap = {
     [ImageModels.StableDiffusion]: 1,
     [ImageModels.TitanImgV2]: 2,
-    [TextModels.Claude3Haiku]: 3,
-    [TextModels.Claude3Sonnet]: 4,
+    [TextModels.Claude45Haiku]: 3,
+    [TextModels.Claude45Sonnet]: 4,
     [ImageModels.StableImageCore1]: 5,
     [ImageModels.StableImageUltra1]: 6,
-    [ImageModels.StableDiffusion3L]: 7
+    [ImageModels.StableDiffusion3L]: 7,
+    [TextModels.Claude41Opus]: 8
   }
