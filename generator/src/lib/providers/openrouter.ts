@@ -96,6 +96,11 @@ export const openrouter = {
     // Remove markdown code blocks if present
     text = text.replace(/^```json\s*/i, '').replace(/^```\s*/i, '').replace(/\s*```$/i, '').trim();
 
-    return JSON.parse(text) as DescriptionJson;
+    try {
+      return JSON.parse(text) as DescriptionJson;
+    } catch (e) {
+      console.error(`JSON parse failed. Raw response:\n${text}`);
+      throw e;
+    }
   },
 };

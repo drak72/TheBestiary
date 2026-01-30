@@ -31,6 +31,7 @@
     "rename": "tsx src/scripts/rename.ts",
     "manifest": "tsx src/scripts/manifest.ts",
     "describe": "tsx src/scripts/describe.ts",
+    "backfill": "tsx src/scripts/backfill.ts",
     "test": "vitest"
   }
 }
