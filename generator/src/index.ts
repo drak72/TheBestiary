@@ -44,17 +44,14 @@ export interface Generator {
 };
 
 const invokeImageModel = async (acc: Generator) => {
-  const modelId = randomImageModel();
-  const adapter = imageModels[modelId];
-  acc.imageModel.id = modelId;
+  const adapter = imageModels[acc.imageModel.id];
+  if (!adapter) throw new Error(`No adapter registered for image model: ${acc.imageModel.id}`);
   acc.imageModel.output = await adapter(acc.imageModel.input);
   return acc;
 };
 
 const invokeTextModel = async (acc: Generator) => {
-  const modelId = randomTextModel();
-  const adapter = textModels[modelId];
-  acc.textModel.id = modelId;
+  const adapter = textModels[acc.textModel.id];
   // imgB64 is populated by prompt.text step before this runs
   acc.textModel.output = await adapter(acc.textModel.input as { prompt: string; imgB64: string });
   return acc;
@@ -66,6 +63,10 @@ export const main = async () => {
   // This changes the prompt to grow the content alongside my daughter.
   const audience = date.getFullYear() - 2020;
   const storageBucket = s3({ Bucket: STORAGE_BUCKET });
+
+  // Select models upfront so both IDs are available for S3 key path generation
+  const imageModelId = randomImageModel();
+  const textModelId = randomTextModel();
 
    return await pipeline<Generator>(
     prompt.image({
@@ -85,8 +86,8 @@ export const main = async () => {
       header: `Your daily ${ENTITY} is here`
     })
   )({
-    imageModel: {},
-    textModel: {},
+    imageModel: { id: imageModelId },
+    textModel: { id: textModelId },
     timestamp: new Date().valueOf()
   } as Generator)
 };
