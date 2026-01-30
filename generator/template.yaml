@@ -9,7 +9,7 @@ Parameters:
     ENTITY:
         Type: String
         Default: '{{resolve:ssm:/BESTIARY/ENTITY:1}}'
-    MAILTO: 
+    MAILTO:
         Type: String
         Default: '{{resolve:ssm:/BESTIARY/MAIL_TO:1}}'
     MAILFROM:
@@ -18,6 +18,9 @@ Parameters:
     IDENTITY:
         Type: String
         Default: '{{resolve:ssm:/BESTIARY/IDENTITY:1}}'
+    OPENROUTERAPIKEY:
+        Type: String
+        Default: '{{resolve:ssm:/UNICORN/OPENROUTER_API_KEY:1}}'
 
 # More info about Globals: https://github.com/awslabs/serverless-application-model/blob/master/docs/globals.rst
 Globals:
@@ -29,6 +32,7 @@ Globals:
                 ENTITY: !Ref ENTITY
                 MAIL_TO: !Ref MAILTO
                 MAIL_FROM: !Ref MAILFROM
+                OPENROUTER_API_KEY: !Ref OPENROUTERAPIKEY
 
 Resources:
     ################### S3 ###################

@@ -30,6 +30,7 @@
     "build": "tsc",
     "rename": "tsx src/scripts/rename.ts",
     "manifest": "tsx src/scripts/manifest.ts",
+    "describe": "tsx src/scripts/describe.ts",
     "test": "vitest"
   }
 }

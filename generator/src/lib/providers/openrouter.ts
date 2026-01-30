@@ -3,15 +3,20 @@
 
 import { ImageModels, TextModels, ImageAdapter, TextAdapter, DescriptionJson } from '../models/types';
 
-const OPENROUTER_API_KEY = process.env.OPENROUTER_API_KEY;
 const OPENROUTER_API_URL = 'https://openrouter.ai/api/v1/chat/completions';
+
+const getApiKey = () => {
+  const key = process.env.OPENROUTER_API_KEY;
+  if (!key) throw new Error('OPENROUTER_API_KEY environment variable not set');
+  return key;
+};
 
 export const openrouter = {
   image: (model: ImageModels): ImageAdapter => async (input) => {
     const response = await fetch(OPENROUTER_API_URL, {
       method: 'POST',
       headers: {
-        'Authorization': `Bearer ${OPENROUTER_API_KEY}`,
+        'Authorization': `Bearer ${getApiKey()}`,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
@@ -54,7 +59,7 @@ export const openrouter = {
     const response = await fetch(OPENROUTER_API_URL, {
       method: 'POST',
       headers: {
-        'Authorization': `Bearer ${OPENROUTER_API_KEY}`,
+        'Authorization': `Bearer ${getApiKey()}`,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
