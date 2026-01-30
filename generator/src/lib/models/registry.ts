@@ -5,10 +5,11 @@ import { bedrock } from '../providers/bedrock';
 import { openrouter } from '../providers/openrouter';
 import { ImageModels, TextModels, ImageAdapter, TextAdapter } from './types';
 
-export const imageModels: Record<ImageModels, ImageAdapter> = {
-  [ImageModels.StableCore]: bedrock.image(ImageModels.StableCore),
-  [ImageModels.StableUltra]: bedrock.image(ImageModels.StableUltra),
-  [ImageModels.SD3Large]: bedrock.image(ImageModels.SD3Large),
+// TODO: Re-enable Bedrock models once we verify which are still available
+export const imageModels: Partial<Record<ImageModels, ImageAdapter>> = {
+  // [ImageModels.StableCore]: bedrock.image(ImageModels.StableCore),  // EOL
+  // [ImageModels.StableUltra]: bedrock.image(ImageModels.StableUltra),  // EOL
+  // [ImageModels.SD3Large]: bedrock.image(ImageModels.SD3Large),  // Check if available
   [ImageModels.NanoBanana]: openrouter.image(ImageModels.NanoBanana),
   [ImageModels.NanoBananaPro]: openrouter.image(ImageModels.NanoBananaPro),
   [ImageModels.GPT5Image]: openrouter.image(ImageModels.GPT5Image),
@@ -18,7 +19,7 @@ export const textModels: Record<TextModels, TextAdapter> = {
   [TextModels.Claude45Sonnet]: openrouter.text(TextModels.Claude45Sonnet),
   [TextModels.GPT4o]: openrouter.text(TextModels.GPT4o),
   [TextModels.Gemini25Flash]: openrouter.text(TextModels.Gemini25Flash),
-  [TextModels.Llama32Vision90B]: openrouter.text(TextModels.Llama32Vision90B),
+  [TextModels.Llama4Maverick]: openrouter.text(TextModels.Llama4Maverick),
 };
 
 export const randomImageModel = (): ImageModels => {

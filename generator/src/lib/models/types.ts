@@ -18,7 +18,7 @@ export enum TextModels {
   Claude45Sonnet = 'anthropic/claude-sonnet-4.5',
   GPT4o = 'openai/gpt-4o',
   Gemini25Flash = 'google/gemini-2.5-flash',
-  Llama32Vision90B = 'meta-llama/llama-3.2-90b-vision-instruct',
+  Llama4Maverick = 'meta-llama/llama-4-maverick',
 }
 
 export type ImageAdapter = (input: { prompt: string }) => Promise<string>;
@@ -47,5 +47,5 @@ export const modelMap: Record<ImageModels | TextModels, number> = {
   [TextModels.Claude45Sonnet]: 7,
   [TextModels.GPT4o]: 8,
   [TextModels.Gemini25Flash]: 9,
-  [TextModels.Llama32Vision90B]: 10,
+  [TextModels.Llama4Maverick]: 10,
 };

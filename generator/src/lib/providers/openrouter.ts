@@ -17,7 +17,7 @@ export const openrouter = {
       body: JSON.stringify({
         model: model,
         messages: [{ role: 'user', content: input.prompt }],
-        modalities: ['image'],
+        modalities: ['image', 'text'],
       }),
     });
 
@@ -27,10 +27,14 @@ export const openrouter = {
     }
 
     const data = await response.json();
-    const content = data.choices?.[0]?.message?.content;
+    const message = data.choices?.[0]?.message;
 
-    if (Array.isArray(content)) {
-      const imageBlock = content.find((block: { type: string }) => block.type === 'image_url');
+    console.log('OpenRouter response keys:', Object.keys(data));
+    console.log('Message keys:', message ? Object.keys(message) : 'no message');
+
+    // Images are returned in message.images array per OpenRouter docs
+    if (message?.images && Array.isArray(message.images)) {
+      const imageBlock = message.images.find((img: { type: string }) => img.type === 'image_url');
       if (imageBlock?.image_url?.url) {
         const dataUrl = imageBlock.image_url.url;
         const base64Match = dataUrl.match(/^data:image\/[^;]+;base64,(.+)$/);
@@ -41,6 +45,8 @@ export const openrouter = {
       }
     }
 
+    // Log full response for debugging if no image found
+    console.log('Full response (no image found):', JSON.stringify(data, null, 2));
     throw new Error(`OpenRouter ${model}: No image in response`);
   },
 
