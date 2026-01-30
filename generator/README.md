@@ -23,20 +23,27 @@ To install the dependencies, run:
 npm install
 ```
 ## Environment Variables
+
+### Local Development (.env)
+
+    OPENROUTER_API_KEY=your-openrouter-api-key
+
+### AWS Parameter Store
+
 Ensure the following environment variables are set in your AWS Parameter Store:
-    
+
     Type: String
     Name: '/BESTIARY/STORAGE'
     Description: S3 Bucket for storing generated content
-    
+
     Type: String
     Name: '/BESTIARY/ENTITY'
     Description: Entity type for generation (e.g., 'unicorn')
-    
+
     Type: String
     Name: '/BESTIARY/MAIL_TO'
     Description: Email address to send the generated content
-    
+
     Type: String
     Name: '/BESTIARY/MAIL_FROM'
     Description: Email address from which the content is sent

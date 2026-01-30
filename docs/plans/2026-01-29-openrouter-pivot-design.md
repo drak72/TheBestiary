@@ -20,7 +20,7 @@ Adapters are self-contained functions: `(input) => Promise<output>`. Each adapte
 │   │ StableCore  │──►bedrock    │ Claude45    │──►OR│
 │   │ StableUltra │──►bedrock    │ GPT4o       │──►OR│
 │   │ NanoBanana  │──►openrouter │ Gemini25    │──►OR│
-│   │ NanoBananaPro│──►openrouter│ Llama32V    │──►OR│
+│   │ NanoBananaPro│──►openrouter│ Llama4Mav   │──►OR│
 │   └─────────────┘              └─────────────┘     │
 └─────────────────────────────────────────────────────┘
 ```
@@ -65,10 +65,13 @@ export const openrouter = {
       body: JSON.stringify({
         model: modelIdMap[model],
         messages: [{ role: "user", content: input.prompt }],
-        modalities: ["image"],
+        modalities: ["image", "text"],
       }),
     });
-    return parseOpenRouterImage(await response.json());
+    // Images returned in message.images[] array, not message.content
+    const data = await response.json();
+    const imageBlock = data.choices[0].message.images.find(i => i.type === 'image_url');
+    return extractBase64(imageBlock.image_url.url);
   },
 
   text: (model: TextModels): TextAdapter => async (input) => {
@@ -98,7 +101,7 @@ export enum TextModels {
   Claude45Sonnet = 'anthropic/claude-sonnet-4.5',
   GPT4o = 'openai/gpt-4o',
   Gemini25Flash = 'google/gemini-2.5-flash',
-  Llama32Vision90B = 'meta-llama/llama-3.2-90b-vision-instruct',
+  Llama4Maverick = 'meta-llama/llama-4-maverick',
 }
 
 // lib/models/registry.ts
@@ -116,7 +119,7 @@ export const textModels = {
   [TextModels.Claude45Sonnet]: openrouter.text(TextModels.Claude45Sonnet),
   [TextModels.GPT4o]: openrouter.text(TextModels.GPT4o),
   [TextModels.Gemini25Flash]: openrouter.text(TextModels.Gemini25Flash),
-  [TextModels.Llama32Vision90B]: openrouter.text(TextModels.Llama32Vision90B),
+  [TextModels.Llama4Maverick]: openrouter.text(TextModels.Llama4Maverick),
 };
 
 export const randomImageModel = () => {
@@ -156,7 +159,6 @@ const generate = pipeline<Generator>(
   prompt.generate(entity),
   invokeImageModel,
   s3.upload.image,
-  image.compress,
   prompt.describe(descriptionPrompt),
   invokeTextModel,
   ...

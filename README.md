@@ -3,7 +3,8 @@
 ![React](https://img.shields.io/badge/React-18.3.1-blue)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5.6.2-blue)
 ![Vite](https://img.shields.io/badge/Vite-6.0.1-blue)
-![AWS](https://img.shields.io/badge/AWS-Bedrock-orange)
+![OpenRouter](https://img.shields.io/badge/OpenRouter-API-green)
+![AWS](https://img.shields.io/badge/AWS-Lambda-orange)
 
 
 ## Table of Contents
@@ -15,7 +16,7 @@
 
 ## Overview
 
-The Bestiary is a example project utilizing [AWS Bedrock](https://aws.amazon.com/bedrock) to explore the capabilities of various foundation models. 
+The Bestiary is a project utilizing [OpenRouter](https://openrouter.ai) to explore the capabilities of various foundation models for image generation and vision/text tasks. 
 
 There are two parts to the project: 
 *  Generator
