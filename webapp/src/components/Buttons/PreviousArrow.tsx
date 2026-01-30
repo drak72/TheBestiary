@@ -1,8 +1,7 @@
-import React from 'react';
 import { Link } from "@tanstack/react-router";
-import CilCaretLeft from "../Icons/CilCaretLeft";
+import CilCaretLeft from "../icons/CilCaretLeft";
 
-import "@components/Buttons/css/NavigationButtons.css";
+import "@components/buttons/css/NavigationButtons.css";
 
 interface ArrowProps {
   prevIdx: number | undefined;
@@ -11,7 +10,7 @@ interface ArrowProps {
 export const PreviousArrow = ({ prevIdx }: ArrowProps) => (
   <>
     {typeof prevIdx === "number" && prevIdx >= 0 ? (
-      <Link to={"/entity/$id"} params={{ id: prevIdx.toString() }} preload="viewport">
+      <Link to={'/entity/$id'} params={{ id: prevIdx.toString() }} preload="viewport">
         <CilCaretLeft className="arrow-btn" />
       </Link>
     ) : (

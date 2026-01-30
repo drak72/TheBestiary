@@ -1,4 +1,3 @@
-import React from "react";
 export function LucideShare2(props:{ className?: string, key?: string  }) {
   return (
     <svg

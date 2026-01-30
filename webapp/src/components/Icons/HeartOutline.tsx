@@ -1,5 +1,3 @@
-import React from "react";
-
 export function HeartOutline(props:{ className?: string, key?: string  }) {
   return (
     <svg

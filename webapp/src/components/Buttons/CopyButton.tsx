@@ -1,4 +1,3 @@
-import React from "react";
 import { useState } from "react";
 
 
@@ -35,7 +34,7 @@ export const CopyUrlButton = ({ urlToShare }: CopyUrlButton) => {
 
   return (
     <div>
-      <button onClick={handleCopy} data-testid="copy-url-btn">
+      <button onClick={handleCopy}>
         <CopyIcon />
       </button>
 

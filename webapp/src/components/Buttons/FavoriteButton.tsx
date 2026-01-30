@@ -1,9 +1,8 @@
-import React from "react";
-import { HeartOutline } from "@components/Icons/HeartOutline";
-import { HeartSolid } from "@components/Icons/HeartSolid";
+import { HeartOutline } from "@icons/HeartOutline";
+import { HeartSolid } from "@icons/HeartSolid";
 import { useLocalStorage } from "@hooks/useLocalStorage";
 
-import "@components/Buttons/css/CardButtons.css";
+import "@components/buttons/css/CardButtons.css";
 
 interface FavoriteButton {
   entityId: string;
@@ -12,13 +11,13 @@ interface FavoriteButton {
 export const FavoriteButton = ({ entityId }: FavoriteButton) => {
   const [data, setData] = useLocalStorage<string[]>({
     key: "favorites",
-    initialValue: [],
+    default: [],
   });
 
   return (
     <div className="card-btn">
       {data && data?.includes(entityId) ? (
-        <button data-testid="HeartSolid"
+        <button
           onClick={() =>
             setData(data.filter((item: string) => item !== entityId))
           }
@@ -26,7 +25,7 @@ export const FavoriteButton = ({ entityId }: FavoriteButton) => {
           <HeartSolid />
         </button>
       ) : (
-        <button  data-testid="HeartOutline" onClick={() => setData([...data, entityId])}>
+        <button onClick={() => setData([...data, entityId])}>
           <HeartOutline />
         </button>
       )}

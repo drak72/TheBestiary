@@ -1,7 +1,5 @@
-import React from "react";
-import CilSync from "@components/Icons/CilSync";
-
-import "@components/Buttons/css/CardButtons.css";
+import CilSync from "@icons/CilSync";
+import "@components/buttons/css/CardButtons.css";
 
 interface RandomButton {
   max: number;

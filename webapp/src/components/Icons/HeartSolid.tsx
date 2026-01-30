@@ -1,4 +1,3 @@
-import React from "react";
 
 export function HeartSolid(props:{ className?: string, key?: string  }) {
   return (

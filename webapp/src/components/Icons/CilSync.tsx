@@ -1,5 +1,3 @@
-import React from "react";
-
 export function CilSync(props:{ className?: string, key?: string  }) {
   return (
     <svg

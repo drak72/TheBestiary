@@ -1,5 +1,3 @@
-import React from "react";
-
 export function CibRedditAlt(props:{ className?: string, key?: string  }) {
   return (
     <svg

@@ -1,5 +1,3 @@
-import React from "react";
-
 export function CilCaretRight(props:{ className?: string, key?: string  }) {
   return (
     <svg

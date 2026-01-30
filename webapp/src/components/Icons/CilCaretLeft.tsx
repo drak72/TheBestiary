@@ -1,6 +1,4 @@
-import React from "react";
-
-export function CilCaretLeft(props:{ className?: string, key?: string  }) {
+export function CilCaretLeft(props:{ className?: string }, key?: string) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -8,6 +6,7 @@ export function CilCaretLeft(props:{ className?: string, key?: string  }) {
       height="1em"
       viewBox="0 0 512 512"
       {...props}
+      key={key}
     >
       <path
         fill="#888888"
@@ -17,4 +16,3 @@ export function CilCaretLeft(props:{ className?: string, key?: string  }) {
   );
 }
 export default CilCaretLeft;
-
