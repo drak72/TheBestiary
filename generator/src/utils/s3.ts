@@ -6,7 +6,7 @@ import { clientParams } from './consts';
 import { Generator } from '..';
 
 import assert from 'node:assert';
-import { modelMap } from '../lib/models/adapter';
+import { modelMap } from '../lib/models/types';
 
 type BaseParams = { Bucket: string };
 type UploadInput = { Key: string, Body: string | Uint8Array | Buffer };

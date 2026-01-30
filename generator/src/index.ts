@@ -1,8 +1,8 @@
 import { config } from 'dotenv';
-import shuffle from 'lodash/shuffle';
-import { pipeline, prompt, mail, validate, s3, model, compress } from './utils/index'
+import { pipeline, prompt, mail, validate, s3, compress } from './utils/index'
+import { imageModels, textModels, randomImageModel, randomTextModel } from './lib/models/registry';
+import { ImageModels, TextModels } from './lib/models/types';
 
-import { ImageModels, models, selectableImageModels, TextModels } from "./lib/models/adapter";
 config();
 
 const { STORAGE_BUCKET, ENTITY, MAIL_FROM, MAIL_TO } = validate.environment([
@@ -43,18 +43,27 @@ export interface Generator {
     timestamp: number
 };
 
+const invokeImageModel = async (acc: Generator) => {
+  const modelId = randomImageModel();
+  const adapter = imageModels[modelId];
+  acc.imageModel.id = modelId;
+  acc.imageModel.output = await adapter(acc.imageModel.input);
+  return acc;
+};
+
+const invokeTextModel = async (acc: Generator) => {
+  const modelId = randomTextModel();
+  const adapter = textModels[modelId];
+  acc.textModel.id = modelId;
+  // imgB64 is populated by prompt.text step before this runs
+  acc.textModel.output = await adapter(acc.textModel.input as { prompt: string; imgB64: string });
+  return acc;
+};
 
 export const main = async () => {
   const date = new Date();
 
-  /** Pick the models to be utilized */
-  const [imageModel] = shuffle(Object.values(selectableImageModels));
-  const [textModel] = shuffle(Object.values(TextModels));
-
-  const imgAdapter = models[imageModel as ImageModels];
-  const txtAdapter = models[textModel as TextModels];
-
-  // This changes the prompt to grow the content alongside my daughter. 
+  // This changes the prompt to grow the content alongside my daughter.
   const audience = date.getFullYear() - 2020;
   const storageBucket = s3({ Bucket: STORAGE_BUCKET });
 
@@ -63,11 +72,11 @@ export const main = async () => {
       entity: ENTITY,
       postscript: `it should delight a ${audience} year old.`
     }),
-    model.invoke.image(imgAdapter),
+    invokeImageModel,
     storageBucket.upload.image,
     compress,
     prompt.text,
-    model.invoke.text(txtAdapter),
+    invokeTextModel,
     storageBucket.upload.text,
     storageBucket.upload.manifest,
     mail.factSheet({
@@ -77,8 +86,8 @@ export const main = async () => {
       header: `Your daily ${ENTITY} is here`
     })
   )({
-    imageModel: { id: imageModel },
-    textModel: { id: textModel },
+    imageModel: {},
+    textModel: {},
     timestamp: new Date().valueOf()
   } as Generator)
 };

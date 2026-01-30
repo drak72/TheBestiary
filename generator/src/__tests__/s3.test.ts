@@ -4,14 +4,14 @@ import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
 import { Upload } from '@aws-sdk/lib-storage';
 import { s3 } from '../utils/s3';
 import type { Mock } from 'vitest'
-import { ImageModels, modelMap, TextModels } from '../lib/models/adapter';
+import { ImageModels, modelMap, TextModels } from '../lib/models/types';
 
 // Mock AWS SDK modules
 vi.mock('@aws-sdk/client-s3');
 vi.mock('@aws-sdk/s3-request-presigner');
 vi.mock('@aws-sdk/lib-storage');
 
-// Mock Generator type and modelMap for testing
+// Mock Generator type for testing
 const mockGenerator = {
   prompt: {
     subject: 'cat',
@@ -21,14 +21,14 @@ const mockGenerator = {
   },
   timestamp: 1234567890,
   imageModel: {
-    id: ImageModels.StableDiffusion,
+    id: ImageModels.StableCore,
     output: 'base64EncodedImage',
     input: {
       prompt: 'A happy cat in a garden, watercolor style'
     }
   },
   textModel: {
-    id: TextModels.Claude45Haiku,
+    id: TextModels.Claude45Sonnet,
     input: {
         prompt: ''
     },
@@ -121,7 +121,7 @@ describe('S3 Functions', () => {
         client: expect.any(S3Client),
         params: {
           Bucket: testBucket,
-          Key: expect.stringContaining(`1234567890-1-3-\"cat\"-\"happy\"-\"garden\"-\"watercolor\"`),
+          Key: expect.stringContaining(`1234567890-1-7-\"cat\"-\"happy\"-\"garden\"-\"watercolor\"`),
           Body: expect.any(Buffer)
         }
       });
