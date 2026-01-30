@@ -14,8 +14,7 @@
     "@types/nodemailer": "^6.4.16",
     "dotenv": "16.4.5",
     "lodash": "4.17.21",
-    "nodemailer": "^6.9.16",
-    "sharp": "^0.34.5"
+    "nodemailer": "^6.9.16"
   },
   "devDependencies": {
     "@types/lodash": "4.17.13",

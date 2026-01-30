@@ -1,5 +1,5 @@
 import { config } from 'dotenv';
-import { pipeline, prompt, mail, validate, s3, compress } from './utils/index'
+import { pipeline, prompt, mail, validate, s3 } from './utils/index'
 import { imageModels, textModels, randomImageModel, randomTextModel } from './lib/models/registry';
 import { ImageModels, TextModels } from './lib/models/types';
 
@@ -74,7 +74,6 @@ export const main = async () => {
     }),
     invokeImageModel,
     storageBucket.upload.image,
-    compress,
     prompt.text,
     invokeTextModel,
     storageBucket.upload.text,
