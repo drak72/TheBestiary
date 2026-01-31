@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Appbar } from "../components/Appbar";
-import { Footer } from "../components/Footer";
+import { Footer } from "../components/Footer/Footer";
 import { ParticleBackground } from "@components/Particles";
 import "./layout.css";
 
