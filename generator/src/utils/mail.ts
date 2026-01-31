@@ -1,3 +1,6 @@
+// ABOUTME: Email utilities for sending fact sheets via AWS SES
+// ABOUTME: Uses nodemailer with SES transport to send creature cards with attachments
+
 import nodemailer from 'nodemailer';
 import * as aws from '@aws-sdk/client-ses';
 import { clientParams } from './consts';
@@ -23,7 +26,12 @@ interface SendMailParams {
 }
 
 const send = async (params: SendMailParams) => {
-  return await transporter.sendMail(params);
+  try {
+    return await transporter.sendMail(params);
+  } catch (error) {
+    console.error('Failed to send email:', error);
+    throw error;
+  }
 }
 
 const factSheet =  ({ from, to, subject, ...rest }: SendMailParams) => async (acc: Generator) => {

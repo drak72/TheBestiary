@@ -6,5 +6,5 @@ s3_prefix = "unicorn-io"
 region = "us-east-1"
 profile = "personal"
 capabilities = "CAPABILITY_IAM"
-parameter_overrides = "TOPICNAME=\"{{resolve:ssm:/UNICORN/SNS:1}}\" STORAGEBUCKET=\"{{resolve:ssm:/UNICORN/STORAGE:1}}\" ENTITY=\"{{resolve:ssm:/UNICORN/ENTITY:1}}\" MAILTO=\"{{resolve:ssm:/UNICORN/MAIL_TO:2}}\" MAILFROM=\"{{resolve:ssm:/UNICORN/MAIL_FROM:1}}\" OPENROUTERAPIKEY=\"{{resolve:ssm:/UNICORN/OPENROUTER_API_KEY:1}}\""
+parameter_overrides = "TOPICNAME=\"{{resolve:ssm:/UNICORN/SNS:1}}\" STORAGEBUCKET=\"{{resolve:ssm:/UNICORN/STORAGE:1}}\" ENTITY=\"{{resolve:ssm:/UNICORN/ENTITY:1}}\" MAILTO=\"{{resolve:ssm:/UNICORN/MAIL_TO}}\" MAILFROM=\"{{resolve:ssm:/UNICORN/MAIL_FROM:1}}\" OPENROUTERAPIKEY=\"{{resolve:ssm:/UNICORN/OPENROUTER_API_KEY:1}}\""
 image_repositories = []
