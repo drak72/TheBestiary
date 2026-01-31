@@ -29,12 +29,12 @@ const send = async (params: SendMailParams) => {
 const factSheet =  ({ from, to, subject, ...rest }: SendMailParams) => async (acc: Generator) => {
   /** Assuming MAIL_TO is a comma separated value string for simplicity.
    *  To scale this up to handle subscriptions: Store subscription info in either dyn or S3 (for simplicity - mostly going to be static data, dependent on scale)
-   *  Use SES Bulk email call directly or SQS + a lambda as a separate microservice. 
+   *  Use SES Bulk email call directly or SQS + a lambda as a separate microservice.
    */
   const emails = to.split(',');
   for await (const email of emails){
     const { output } = acc.textModel
-  
+
     const params = {
       from,
       to: email,
@@ -59,10 +59,17 @@ const factSheet =  ({ from, to, subject, ...rest }: SendMailParams) => async (ac
         content: Buffer.from(acc.imageModel.output, 'base64')
       }]
     }
-  
-    await transporter.sendMail(params);
+
+    try {
+      console.log(`Sending email to ${email}...`);
+      await transporter.sendMail(params);
+      console.log(`Email sent successfully to ${email}`);
+    } catch (error) {
+      console.error(`Failed to send email to ${email}:`, error);
+      throw error;
+    }
   };
-  
+
   return acc;
 }
 

@@ -51,7 +51,7 @@ Resources:
             CodeUri: 'src/'
             Handler: index.main
             Runtime: nodejs20.x
-            Timeout: 120
+            Timeout: 300
             Architectures:
                 - arm64
             Events:
