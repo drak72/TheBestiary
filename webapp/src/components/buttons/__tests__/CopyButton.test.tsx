@@ -1,7 +1,7 @@
 // src/components/buttons/__tests__/CopyButton.test.tsx
 import React from 'react';
 import { render, screen, fireEvent, waitFor, act } from '@testing-library/react';
-import { CopyUrlButton } from '@components/Buttons/CopyButton';
+import { CopyUrlButton } from '@components/buttons/CopyButton';
 
 describe('CopyUrlButton', () => {
   it('renders the button', () => {

@@ -1,6 +1,6 @@
 import React from "react";
 import { render, screen, fireEvent } from "@testing-library/react";
-import { FavoriteButton } from "@components/Buttons/FavoriteButton";
+import { FavoriteButton } from "@components/buttons/FavoriteButton";
 import { useLocalStorage } from "@hooks/useLocalStorage";
 
 jest.mock("@hooks/useLocalStorage");

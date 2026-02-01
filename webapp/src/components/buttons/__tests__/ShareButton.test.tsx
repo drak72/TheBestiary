@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
-import { ShareButton } from '@components/Buttons/ShareButton';
+import { ShareButton } from '@components/buttons/ShareButton';
 
 describe('ShareButton', () => {
   const urlToShare = 'https://example.com/entity/1';

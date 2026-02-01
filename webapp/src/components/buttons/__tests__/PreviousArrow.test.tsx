@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import { PreviousArrow } from '@components/Buttons/PreviousArrow';
+import { PreviousArrow } from '@components/buttons/PreviousArrow';
 
 // Mock the Link component
 jest.mock('@tanstack/react-router', () => ({

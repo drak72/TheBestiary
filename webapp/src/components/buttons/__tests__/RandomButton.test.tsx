@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import { RandomButton } from '@components/Buttons/RandomButton';
+import { RandomButton } from '@components/buttons/RandomButton';
 
 describe('RandomButton', () => {
   beforeEach(() => {
