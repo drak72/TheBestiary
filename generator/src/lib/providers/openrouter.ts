@@ -78,6 +78,7 @@ export const openrouter = {
           ],
         }],
         max_tokens: 1000,
+        response_format: { type: "json_object" },
       }),
     });
 

@@ -51,17 +51,18 @@ const describe = (prompt: string) => async (acc: Generator) => {
 
 export const prompt = {
   image: generate({ subjects, adjectives, setting, style }),
-  text: describe(`You are a naturalist scientifically describing a mythical creature as though it were a real animal. This is a picture of a riff on a unicorn. It is ok to invent details here, as it will be presented as fictional. \n
-            invent information about it in the following JSON format:
-            {
-              "name": '',
-              "scientific_name": '',
-              "habitat": '',
-              "size": '',
-              "coloration": '',
-              "diet": '',
-              "lifespan": '',
-              "special_abilities": '',
-              "fun_fact": ''
-            }`)
+  text: describe(`You are a naturalist scientifically describing a mythical creature as though it were a real animal. This is a picture of a riff on a unicorn. It is ok to invent details here, as it will be presented as fictional.
+
+You MUST respond with ONLY a valid JSON object in the following format, with no additional text before or after:
+{
+  "name": "",
+  "scientific_name": "",
+  "habitat": "",
+  "size": "",
+  "coloration": "",
+  "diet": "",
+  "lifespan": "",
+  "special_abilities": "",
+  "fun_fact": ""
+}`)
 };
