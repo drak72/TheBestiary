@@ -22,11 +22,17 @@
   .card-content {
     display: flex;
     flex-direction: column;
-    padding: 1rem; 
-    line-height: normal; 
-    color: white; 
+    padding: 1rem;
+    line-height: normal;
+    color: white;
     overflow-y: scroll;
     max-height: 80vh;
+  }
+
+  @media (max-width: 767px) {
+    .card-content {
+      max-height: 60vh;
+    }
   }
 
   .card-content-header {
@@ -50,11 +56,17 @@
   .details-grid {
     display: grid;
     grid-auto-flow: row;
-    gap: 0.5rem; 
-    margin-left: 1.5rem; 
+    gap: 0.5rem;
+    margin-left: 1.5rem;
     padding-right: 1rem;
-    font-size: 0.75rem; 
+    font-size: 0.75rem;
     overflow-y: scroll;
+  }
+
+  @media (max-width: 767px) {
+    .details-grid {
+      margin-left: 0.5rem;
+    }
   }
 
   .details-label {
