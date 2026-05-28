@@ -21,6 +21,7 @@ Parameters:
     OPENROUTERAPIKEY:
         Type: String
         Default: '{{resolve:ssm:/UNICORN/OPENROUTER_API_KEY:1}}'
+        NoEcho: true
 
 # More info about Globals: https://github.com/awslabs/serverless-application-model/blob/master/docs/globals.rst
 Globals:
