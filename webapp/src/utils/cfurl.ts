@@ -4,8 +4,7 @@ interface CFProps {
 }
 
 export const cfurl = ({ item, type }: CFProps) => {
-  const url =
-    import.meta.env.MODE === "development" ? import.meta.env.VITE_CF_URL : "/";
+  const url = import.meta.env.VITE_CF_URL || "/";
 
   if (type === "manifest.json") return `${url}manifest.json`;
   return `${url}${encodeURIComponent(item)}/${type}`;
