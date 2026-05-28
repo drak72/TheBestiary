@@ -23,6 +23,10 @@ export const openrouter = {
         model: model,
         messages: [{ role: 'user', content: input.prompt }],
         modalities: ['image', 'text'],
+        // Cap the text-token reservation so OpenRouter's pre-flight credit
+        // check stays under the key's monthly budget; we discard the text
+        // portion of the response anyway.
+        max_tokens: 100,
       }),
     });
 
