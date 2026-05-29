@@ -52,8 +52,13 @@ describe('openrouter.image', () => {
     const body = JSON.parse(init?.body as string);
 
     expect(body.max_tokens).toBeTypeOf('number');
-    expect(body.max_tokens).toBeGreaterThan(0);
-    expect(body.max_tokens).toBeLessThanOrEqual(1000);
+    // Floor: large enough for thinking models to finish reasoning + emit an image
+    // (observed: gemini-3-pro-image-preview consumed ~97 reasoning tokens
+    // before any image content).
+    expect(body.max_tokens).toBeGreaterThanOrEqual(1000);
+    // Ceiling: small enough that OpenRouter's worst-case credit reservation
+    // fits under a modest monthly key budget (saw 6825-token cap in prod).
+    expect(body.max_tokens).toBeLessThanOrEqual(5000);
   });
 
   it('returns the base64 payload from a data URL image response', async () => {

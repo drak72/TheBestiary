@@ -24,9 +24,11 @@ export const openrouter = {
         messages: [{ role: 'user', content: input.prompt }],
         modalities: ['image', 'text'],
         // Cap the text-token reservation so OpenRouter's pre-flight credit
-        // check stays under the key's monthly budget; we discard the text
-        // portion of the response anyway.
-        max_tokens: 100,
+        // check stays under the key's monthly budget. Sized to leave thinking
+        // models (e.g. gemini-3-pro-image-preview) enough room to finish
+        // reasoning before emitting the image; smaller caps starved the
+        // image step.
+        max_tokens: 4000,
       }),
     });
 
